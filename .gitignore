@@ -1,0 +1,23 @@
+# Sensitive / environment
+*.env
+.env
+.env.local
+config.js
+secrets.js
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies (if Node.js is ever added)
+node_modules/
