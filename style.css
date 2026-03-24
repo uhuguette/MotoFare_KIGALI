@@ -1,0 +1,111 @@
+/* ============================================
+   MOTOFAR KIGALI — Stylesheet
+   ============================================ */
+
+:root {
+  --green: #1a7a4a;
+  --green-light: #25a066;
+  --green-pale: #e8f5ee;
+  --orange: #e8621a;
+  --orange-light: #f07840;
+  --orange-pale: #fdf0e8;
+  --dark: #141414;
+  --dark-2: #2a2a2a;
+  --mid: #555;
+  --light: #f7f5f0;
+  --white: #ffffff;
+  --border: #e0dbd2;
+  --shadow: 0 4px 24px rgba(0,0,0,0.10);
+  --shadow-hover: 0 8px 32px rgba(0,0,0,0.16);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--light);
+  color: var(--dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---- HEADER ---- */
+header {
+  background: var(--dark);
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(232,98,26,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2.2rem 2rem 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon { font-size: 2.2rem; }
+
+.logo-text {
+  font-family: var(--font-head);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  display: block;
+}
+
+.logo-sub {
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--orange-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.tagline {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.header-stripe {
+  height: 5px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--green-light) 40%, var(--orange) 70%, var(--orange-light) 100%);
+}
