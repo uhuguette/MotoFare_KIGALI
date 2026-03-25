@@ -30,8 +30,25 @@
 
     <!-- Quick Routes Section -->
     <section class="section" id="quick-routes">
-      <div class="section-label">⚡ Fixed Fair Routes</div>
-      <p class="section-desc">Community-verified fair prices for common student routes.</p>
+      <div class="section-label">⚡ Fixed Fair Routes for Rwandan community &amp; Students</div>
+      <p class="section-desc">Community-verified fair prices for common student routes. Click "Use this route" to fill the estimator below.</p>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All Routes</button>
+        <button class="filter-btn" data-filter="cheap">Under 1000 RWF</button>
+        <button class="filter-btn" data-filter="medium">1000–2000 RWF</button>
+        <button class="filter-btn" data-filter="far">2000+ RWF</button>
+        <div class="sort-group">
+          <label>Sort by:</label>
+          <select id="sortSelect">
+            <option value="default">Default</option>
+            <option value="price-asc">Price ↑</option>
+            <option value="price-desc">Price ↓</option>
+            <option value="distance-asc">Distance ↑</option>
+          </select>
+        </div>
+      </div>
+
       <div class="routes-grid" id="routesGrid">
         <!-- Populated by JS -->
       </div>
