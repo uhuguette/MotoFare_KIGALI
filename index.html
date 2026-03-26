@@ -91,6 +91,29 @@
           <span class="btn-loader hidden">Calculating...</span>
         </button>
       </div>
+
+      <!-- Result -->
+      <div class="result-card hidden" id="resultCard">
+        <div class="result-header">
+          <span class="result-route" id="resultRoute"></span>
+          <span class="result-badge">Estimated</span>
+        </div>
+        <div class="result-fare" id="resultFare"></div>
+        <div class="result-meta" id="resultMeta"></div>
+        <div class="fare-range" id="fareRange"></div>
+        <div class="result-breakdown" id="resultBreakdown"></div>
+        <div class="student-result-note" id="studentNote" hidden>
+          🎓 20% student discount applied — show this screen to your moto driver!
+        </div>
+        <p class="result-note">💡 Always agree on price before boarding.</p>
+      </div>
+
+      <!-- Error -->
+      <div class="error-card hidden" id="errorCard">
+        <span class="error-icon" id="errorIcon">⚠️</span>
+        <p id="errorMsg">Something went wrong. Please try again.</p>
+        <button class="retry-btn" id="retryBtn">Try Again</button>
+      </div>
     </section>
 
   </main>
