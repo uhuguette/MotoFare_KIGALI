@@ -51,3 +51,56 @@ function tripInvolvesUniversity(origin, dest) {
 function shouldApplyStudentDiscount(origin, dest) {
   return userProfile && userProfile.type === "student" && tripInvolvesUniversity(origin, dest);
 }
+
+// ============================================================
+// FIXED ROUTES RENDERING
+// ============================================================
+function renderRoutes() {
+  const grid = document.getElementById("routesGrid");
+  let routes = [...FIXED_ROUTES];
+
+  if (currentSort === "price-asc")        routes.sort((a, b) => a.price - b.price);
+  else if (currentSort === "price-desc")  routes.sort((a, b) => b.price - a.price);
+  else if (currentSort === "distance-asc") routes.sort((a, b) => a.distanceKm - b.distanceKm);
+
+  grid.innerHTML = routes.map(r => {
+    let hidden = "";
+    if (currentFilter === "cheap"  && r.price >= 1000)                    hidden = "hidden-card";
+    if (currentFilter === "medium" && (r.price < 1000 || r.price > 2000)) hidden = "hidden-card";
+    if (currentFilter === "far"    && r.price <= 2000)                    hidden = "hidden-card";
+
+    return `
+      <div class="route-card ${hidden}">
+        <span class="route-from">${r.from}</span>
+        <div class="route-to">${r.to}</div>
+        <div class="route-info">~${r.distanceKm} km &nbsp;·&nbsp; ~${r.durationMin} min</div>
+        <span class="route-tag">${r.tag}</span>
+        <div class="route-price">${r.price.toLocaleString()} RWF</div>
+        <button class="use-route-btn" data-from="${r.from}" data-to="${r.to}">Use this route →</button>
+      </div>`;
+  }).join("");
+
+  grid.querySelectorAll(".use-route-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.getElementById("origin").value      = btn.dataset.from;
+      document.getElementById("destination").value = btn.dataset.to;
+      document.getElementById("estimator").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    renderRoutes();
+  });
+});
+
+document.getElementById("sortSelect").addEventListener("change", e => {
+  currentSort = e.target.value;
+  renderRoutes();
+});
+
+renderRoutes();
