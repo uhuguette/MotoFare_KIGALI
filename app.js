@@ -104,3 +104,68 @@ document.getElementById("sortSelect").addEventListener("change", e => {
 });
 
 renderRoutes();
+
+// ============================================================
+// FARE CALCULATION
+// ============================================================
+function calcFare(distanceKm, applyDiscount = false) {
+  let cost = PRICING.baseFare;
+  let rem  = Math.max(0, distanceKm - 1);
+
+  const t1 = Math.min(rem, 4);
+  cost += t1 * PRICING.rateT1; rem -= t1;
+
+  const t2 = Math.min(rem, 5);
+  cost += t2 * PRICING.rateT2; rem -= t2;
+
+  cost += rem * PRICING.rateT3;
+
+  const subtotal = cost;
+  const stuAdj   = applyDiscount ? subtotal * PRICING.studentDisc : 0;
+  const final    = Math.round((subtotal - stuAdj) / 50) * 50;
+
+  return { subtotal, stuAdj, final };
+}
+
+// UI helpers
+const estimateBtn = document.getElementById("estimateBtn");
+const btnText     = document.querySelector(".btn-text");
+const btnLoader   = document.querySelector(".btn-loader");
+const resultCard  = document.getElementById("resultCard");
+const errorCard   = document.getElementById("errorCard");
+
+function setLoading(yes) {
+  estimateBtn.disabled = yes;
+  btnText.classList.toggle("hidden", yes);
+  btnLoader.classList.toggle("hidden", !yes);
+}
+
+function showError(msg, isOutOfBounds = false) {
+  resultCard.classList.add("hidden");
+  errorCard.classList.remove("hidden");
+  document.getElementById("errorIcon").textContent = isOutOfBounds ? "🗺️" : "⚠️";
+  document.getElementById("errorMsg").textContent  = msg;
+}
+
+// ============================================================
+// ROUTING — OSRM
+// ============================================================
+async function getRouteOSRM(fromCoords, toCoords) {
+  const url = `https://router.project-osrm.org/route/v1/driving/${fromCoords.lon},${fromCoords.lat};${toCoords.lon},${toCoords.lat}?overview=false`;
+  const res  = await fetch(url);
+  if (!res.ok) throw new Error(`Routing failed (HTTP ${res.status})`);
+  const data = await res.json();
+  if (data.code !== "Ok" || !data.routes || !data.routes.length)
+    throw new Error("No road route found.");
+  const route = data.routes[0];
+  return { distanceKm: parseFloat((route.distance / 1000).toFixed(2)), durationMin: Math.ceil(route.duration / 60) };
+}
+
+document.getElementById("estimateBtn").addEventListener("click", async () => {
+  const origin = document.getElementById("origin").value.trim();
+  const dest   = document.getElementById("destination").value.trim();
+  if (!origin || !dest) { showError("Please enter both a starting point and destination."); return; }
+  if (origin.toLowerCase() === dest.toLowerCase()) { showError("Origin and destination appear to be the same location."); return; }
+  // Full flow handled after geocoding is added
+  showError("Geocoding not yet implemented. Stay tuned!");
+});
