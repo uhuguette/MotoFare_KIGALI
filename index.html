@@ -26,11 +26,13 @@
     <div class="header-stripe"></div>
   </header>
 
+
+  <!-- Main -->
   <main>
 
     <!-- Quick Routes Section -->
     <section class="section" id="quick-routes">
-      <div class="section-label">⚡ Fixed Fair Routes for Rwandan community &amp; Students</div>
+      <div class="section-label">⚡ Fixed Fair Routes for Rwandan community & Students</div>
       <p class="section-desc">Community-verified fair prices for common student routes. Click "Use this route" to fill the estimator below.</p>
 
       <div class="filter-bar">
@@ -116,7 +118,142 @@
       </div>
     </section>
 
+    <!-- How it works -->
+    <section class="section how-it-works">
+      <div class="section-label">📖 How Pricing Works</div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-icon">🏁</div>
+          <div class="pricing-title">Base Fare</div>
+          <div class="pricing-value">500 RWF</div>
+          <div class="pricing-desc">Minimum — first 1 km</div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-icon">📏</div>
+          <div class="pricing-title">1 – 5 km</div>
+          <div class="pricing-value">+200 RWF/km</div>
+          <div class="pricing-desc">Short distance rate</div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-icon">📐</div>
+          <div class="pricing-title">5 – 10 km</div>
+          <div class="pricing-value">+150 RWF/km</div>
+          <div class="pricing-desc">Medium distance rate</div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-icon">🛣️</div>
+          <div class="pricing-title">Over 10 km</div>
+          <div class="pricing-value">+110 RWF/km</div>
+          <div class="pricing-desc">Max ~2500 RWF cross-city</div>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-icon">🎓</div>
+          <div class="pricing-title">Student Discount</div>
+          <div class="pricing-value">−20%</div>
+          <div class="pricing-desc">Toggle in header</div>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <footer>
+    <p>Built by Huguette, for ALU students 🇷🇼 &nbsp;|&nbsp; Powered by <a href="https://nominatim.openstreetmap.org" target="_blank">OpenStreetMap Nominatim</a> &amp; <a href="https://project-osrm.org" target="_blank">OSRM</a></p>
+    <p class="footer-note">Both APIs are free and open-source — no API key required. Prices are fair estimates; always negotiate before boarding.</p>
+  </footer>
+
+  <!-- ── Onboarding Modal ── -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card" id="modalCard">
+
+      <!-- Step 1: Student or Public -->
+      <div class="modal-step" id="stepType">
+        <div class="modal-hero">🏍️</div>
+        <h2 class="modal-title">Welcome to MotoFare Kigali</h2>
+        <p class="modal-sub">Fair prices, every ride. Tell us who you are to continue.</p>
+        <div class="type-grid">
+          <button class="type-btn" id="chooseStudent">
+            <span class="type-icon">🎓</span>
+            <span class="type-label">I'm a Student</span>
+            <span class="type-hint">20% off rides to/from any university</span>
+          </button>
+          <button class="type-btn" id="choosePublic">
+            <span class="type-icon">👤</span>
+            <span class="type-label">General Public</span>
+            <span class="type-hint">Standard fare estimates</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2a: Student form -->
+      <div class="modal-step hidden" id="stepStudent">
+        <button class="modal-back" id="backStudent">← Back</button>
+        <div class="modal-hero">🎓</div>
+        <h2 class="modal-title">Student Profile</h2>
+        <p class="modal-sub">Your 20% discount activates automatically when your trip is to or from any university in Kigali.</p>
+        <form id="studentForm" novalidate>
+          <div class="form-group">
+            <label for="sName">Full Name <span class="req">*</span></label>
+            <input type="text" id="sName" placeholder="e.g. Huguette Uwase" autocomplete="name"/>
+          </div>
+          <div class="form-group">
+            <label for="sUniversity">University <span class="req">*</span></label>
+            <select id="sUniversity">
+              <option value="">— Select your university —</option>
+              <option value="alu">ALU Rwanda Campus</option>
+              <option value="ur">University of Rwanda</option>
+              <option value="cmu">CMU Africa</option>
+              <option value="auca">AUCA Kigali</option>
+              <option value="mku">Mount Kigali University</option>
+              <option value="kepler">Kepler College</option>
+              <option value="ines">INES Kigali</option>
+              <option value="other">Other university</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sId">Student ID</label>
+            <input type="text" id="sId" placeholder="e.g. ALU/2024/0123"/>
+          </div>
+          <div class="form-or"><span>or</span></div>
+          <div class="form-group">
+            <label>Student Card Photo</label>
+            <div class="file-zone" id="fileZone">
+              <input type="file" id="sCard" accept="image/*" class="file-input"/>
+              <label for="sCard" class="file-label">
+                <span class="file-icon">📷</span>
+                <span id="fileZoneText">Tap to upload your student card</span>
+              </label>
+            </div>
+            <img id="cardPreview" class="card-preview hidden" alt="Student card preview"/>
+          </div>
+          <p class="form-note">* Provide your Student ID <em>or</em> upload a card photo — at least one is required</p>
+          <div class="form-error hidden" id="sError"></div>
+          <button type="submit" class="modal-cta">Get Started →</button>
+        </form>
+      </div>
+
+      <!-- Step 2b: Public form -->
+      <div class="modal-step hidden" id="stepPublic">
+        <button class="modal-back" id="backPublic">← Back</button>
+        <div class="modal-hero">👤</div>
+        <h2 class="modal-title">Your Profile</h2>
+        <p class="modal-sub">Just a quick setup. Standard fare estimates with no discount.</p>
+        <form id="publicForm" novalidate>
+          <div class="form-group">
+            <label for="pName">Full Name <span class="req">*</span></label>
+            <input type="text" id="pName" placeholder="e.g. Jean Bosco Niyonzima" autocomplete="name"/>
+          </div>
+          <div class="form-group">
+            <label for="pPhone">Phone Number <span class="req">*</span></label>
+            <input type="tel" id="pPhone" placeholder="e.g. 0788 123 456" autocomplete="tel"/>
+          </div>
+          <div class="form-error hidden" id="pError"></div>
+          <button type="submit" class="modal-cta">Get Started →</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
