@@ -19,3 +19,7 @@ Open `index.html` in any modern browser. No build step required.
 
 - Nominatim (OpenStreetMap) — free geocoding, no key needed
 - OSRM (Open Source Routing Machine) — free road routing, no key needed
+
+## Note
+
+A night surcharge (+15%) applies automatically between 21:00 and 05:00.
