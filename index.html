@@ -26,6 +26,11 @@
     <div class="header-stripe"></div>
   </header>
 
+  <!-- Profile bar (shown after onboarding completes) -->
+  <div class="profile-bar" id="profileBar" hidden>
+    <span class="profile-info" id="profileInfo"></span>
+    <button class="profile-change-btn" id="changeProfileBtn">✎ Change</button>
+  </div>
 
   <!-- Main -->
   <main>
@@ -85,6 +90,19 @@
             <span class="input-icon">🔴</span>
             <input type="text" id="destination" placeholder="e.g. Kimironko Market" autocomplete="off"/>
             <div class="suggestions" id="destinationSuggestions"></div>
+          </div>
+        </div>
+
+        <!-- Quick destination shortcuts -->
+        <div class="shortcuts-section">
+          <div class="shortcuts-label">Quick destinations:</div>
+          <div class="shortcuts-grid">
+            <button class="shortcut-chip" data-place="Kigali International Airport">✈️ Airport</button>
+            <button class="shortcut-chip" data-place="Kimironko Market">🛒 Kimironko</button>
+            <button class="shortcut-chip" data-place="Nyabugogo Bus Park">🚌 Nyabugogo</button>
+            <button class="shortcut-chip" data-place="Remera">📍 Remera</button>
+            <button class="shortcut-chip" data-place="Downtown Kigali">🏙️ Downtown</button>
+            <button class="shortcut-chip" data-place="Kacyiru">🏢 Kacyiru</button>
           </div>
         </div>
 
