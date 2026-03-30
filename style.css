@@ -1,5 +1,6 @@
 /* ============================================
    MOTOFAR KIGALI — Stylesheet
+   Aesthetic: Bold African warmth meets clean utility
    ============================================ */
 
 :root {
@@ -52,6 +53,17 @@ header::before {
   pointer-events: none;
 }
 
+header::after {
+  content: '🏍️🏍️🏍️';
+  position: absolute;
+  right: 2rem; top: 50%;
+  transform: translateY(-50%);
+  font-size: 2.5rem;
+  opacity: 0.07;
+  letter-spacing: 0.5rem;
+  pointer-events: none;
+}
+
 .header-inner {
   max-width: 860px;
   margin: 0 auto;
@@ -68,6 +80,81 @@ header::before {
   gap: 1.5rem;
   margin-left: auto;
   flex-wrap: wrap;
+}
+
+/* ---- STUDENT TOGGLE ---- */
+.student-toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-btn {
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.toggle-btn.active { background: var(--orange); }
+
+.toggle-thumb {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--white);
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+
+.toggle-btn.active .toggle-thumb { transform: translateX(20px); }
+
+/* ---- STUDENT BANNER ---- */
+.student-banner {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+  color: var(--white);
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 860px;
+  margin: 0 auto;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+
+.student-banner[hidden] { display: none; }
+
+.badge-icon { font-size: 1.5rem; }
+
+.student-banner strong { display: block; font-size: 0.9rem; }
+.student-banner p { font-size: 0.78rem; opacity: 0.85; margin-top: 0.1rem; }
+
+.discount-chip {
+  margin-left: auto;
+  background: rgba(255,255,255,0.25);
+  border: 1.5px solid rgba(255,255,255,0.5);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .logo {
@@ -139,6 +226,55 @@ main {
   margin-top: -0.4rem;
 }
 
+/* ---- FILTER BAR ---- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.filter-btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--mid);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.filter-btn:hover { border-color: var(--green); color: var(--green); }
+.filter-btn.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: var(--white);
+}
+
+.sort-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--mid);
+}
+
+.sort-group select {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--dark);
+  cursor: pointer;
+  outline: none;
+}
+
 /* ---- ROUTES GRID ---- */
 .routes-grid {
   display: grid;
@@ -176,6 +312,7 @@ main {
   border-color: var(--green);
 }
 .route-card:hover::before { opacity: 1; }
+
 .route-card.hidden-card { display: none; }
 
 .route-from {
@@ -194,7 +331,11 @@ main {
   line-height: 1.2;
 }
 
-.route-info { font-size: 0.78rem; color: var(--mid); font-weight: 300; }
+.route-info {
+  font-size: 0.78rem;
+  color: var(--mid);
+  font-weight: 300;
+}
 
 .route-price {
   font-family: var(--font-head);
@@ -216,51 +357,6 @@ main {
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   width: fit-content;
-}
-
-/* ---- FILTER BAR ---- */
-.filter-bar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.filter-btn {
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 500;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  border: 1.5px solid var(--border);
-  background: var(--white);
-  color: var(--mid);
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.filter-btn:hover { border-color: var(--green); color: var(--green); }
-.filter-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
-
-.sort-group {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-left: auto;
-  font-size: 0.82rem;
-  color: var(--mid);
-}
-
-.sort-group select {
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  padding: 0.35rem 0.7rem;
-  border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--white);
-  color: var(--dark);
-  cursor: pointer;
-  outline: none;
 }
 
 /* ---- DIVIDER ---- */
@@ -289,9 +385,14 @@ main {
   flex-direction: column;
   gap: 1rem;
   box-shadow: var(--shadow);
+  position: relative;
 }
 
-.input-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
 
 .input-group label {
   font-size: 0.78rem;
@@ -301,7 +402,11 @@ main {
   color: var(--mid);
 }
 
-.input-wrap { position: relative; display: flex; align-items: center; }
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
 .input-icon {
   position: absolute;
@@ -330,6 +435,7 @@ main {
   background: var(--white);
 }
 
+/* Autocomplete suggestions */
 .suggestions {
   position: absolute;
   top: calc(100% + 4px);
@@ -358,6 +464,7 @@ main {
 .suggestion-item:hover { background: var(--green-pale); color: var(--green); }
 .suggestion-item .sug-icon { font-size: 0.75rem; opacity: 0.5; }
 
+/* ---- GPS BUTTON ---- */
 .gps-btn {
   position: absolute;
   right: 0.6rem;
@@ -379,6 +486,73 @@ main {
 .gps-btn.spinning { animation: spin 1s linear infinite; }
 
 @keyframes spin { to { transform: translateY(-50%) rotate(360deg); } }
+
+/* ---- SHORTCUT CHIPS ---- */
+.shortcuts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.shortcuts-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--mid);
+}
+
+.shortcuts-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.shortcut-chip {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--mid);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.shortcut-chip:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.shortcut-chip.active-dest {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+}
+
+/* ---- USE ROUTE BUTTON ---- */
+.use-route-btn {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--green);
+  background: transparent;
+  color: var(--green);
+  cursor: pointer;
+  margin-top: 0.25rem;
+  transition: all 0.18s ease;
+  align-self: flex-start;
+}
+
+.use-route-btn:hover {
+  background: var(--green);
+  color: var(--white);
+}
 
 .swap-btn {
   align-self: center;
@@ -470,7 +644,11 @@ main {
   margin-bottom: 0.5rem;
 }
 
-.result-meta { font-size: 0.88rem; color: var(--mid); margin-bottom: 0.75rem; }
+.result-meta {
+  font-size: 0.88rem;
+  color: var(--mid);
+  margin-bottom: 0.75rem;
+}
 
 .result-breakdown {
   background: var(--green-pale);
@@ -483,7 +661,11 @@ main {
   margin-bottom: 0.75rem;
 }
 
-.result-note { font-size: 0.8rem; color: var(--mid); font-style: italic; }
+.result-note {
+  font-size: 0.8rem;
+  color: var(--mid);
+  font-style: italic;
+}
 
 .fare-range {
   font-size: 0.82rem;
@@ -572,7 +754,11 @@ main {
   color: var(--green);
 }
 
-.pricing-desc { font-size: 0.78rem; color: var(--mid); font-weight: 300; }
+.pricing-desc {
+  font-size: 0.78rem;
+  color: var(--mid);
+  font-weight: 300;
+}
 
 /* ---- PROFILE BAR ---- */
 .profile-bar {
@@ -649,7 +835,10 @@ main {
   transition: opacity 0.25s ease;
 }
 
-.modal-overlay.visible { opacity: 1; pointer-events: all; }
+.modal-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
 
 .modal-card {
   background: var(--white);
@@ -665,6 +854,7 @@ main {
 
 .modal-step { display: flex; flex-direction: column; gap: 1rem; }
 .modal-step.hidden { display: none; }
+
 .modal-hero { font-size: 2.4rem; text-align: center; }
 
 .modal-title {
@@ -676,7 +866,13 @@ main {
   margin: 0;
 }
 
-.modal-sub { font-size: 0.85rem; color: var(--mid); text-align: center; line-height: 1.5; margin: 0; }
+.modal-sub {
+  font-size: 0.85rem;
+  color: var(--mid);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
 
 .modal-back {
   background: none;
@@ -691,7 +887,13 @@ main {
 }
 .modal-back:hover { color: var(--dark); }
 
-.type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.5rem; }
+/* ── Type selection buttons ── */
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
 
 .type-btn {
   display: flex;
@@ -713,7 +915,12 @@ main {
 .type-label { font-family: var(--font-head); font-size: 0.88rem; font-weight: 700; color: var(--dark); }
 .type-hint  { font-size: 0.72rem; color: var(--mid); line-height: 1.3; }
 
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+/* ── Form elements ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
 
 .form-group label {
   font-size: 0.78rem;
@@ -747,12 +954,21 @@ main {
 }
 
 .form-or {
-  display: flex; align-items: center; gap: 0.75rem;
-  color: var(--mid); font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--mid);
+  font-size: 0.8rem;
 }
-.form-or::before, .form-or::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.form-or::before, .form-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
 .form-or span { white-space: nowrap; }
 
+/* ── File upload zone ── */
 .file-zone {
   position: relative;
   border: 2px dashed var(--border);
@@ -760,26 +976,53 @@ main {
   background: var(--light);
   transition: border-color 0.18s, background 0.18s;
 }
+
 .file-zone:hover, .file-zone.has-file { border-color: var(--green); background: var(--green-pale); }
 
-.file-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
 
 .file-label {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 0.35rem; padding: 1rem; cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1rem;
+  cursor: pointer;
 }
 
 .file-icon { font-size: 1.5rem; }
 
-#fileZoneText { font-size: 0.82rem; color: var(--mid); text-align: center; word-break: break-all; }
+#fileZoneText {
+  font-size: 0.82rem;
+  color: var(--mid);
+  text-align: center;
+  word-break: break-all;
+}
 
 .card-preview {
-  display: block; width: 100%; max-height: 160px; object-fit: cover;
-  border-radius: var(--radius-sm); margin-top: 0.5rem; border: 1.5px solid var(--border);
+  display: block;
+  width: 100%;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-top: 0.5rem;
+  border: 1.5px solid var(--border);
 }
 .card-preview.hidden { display: none; }
 
-.form-note { font-size: 0.75rem; color: var(--mid); font-style: italic; line-height: 1.4; }
+.form-note {
+  font-size: 0.75rem;
+  color: var(--mid);
+  font-style: italic;
+  line-height: 1.4;
+}
 
 .form-error {
   background: #fff5f5;
@@ -793,7 +1036,8 @@ main {
 
 .modal-cta {
   font-family: var(--font-head);
-  font-size: 1rem; font-weight: 700;
+  font-size: 1rem;
+  font-weight: 700;
   padding: 0.85rem 2rem;
   border-radius: var(--radius-sm);
   border: none;
@@ -805,6 +1049,7 @@ main {
   margin-top: 0.25rem;
   width: 100%;
 }
+
 .modal-cta:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* ---- FOOTER ---- */
@@ -822,50 +1067,6 @@ footer {
 footer a { color: var(--orange-light); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 .footer-note { font-size: 0.72rem; opacity: 0.6; font-style: italic; }
-
-/* ---- SHORTCUTS ---- */
-.shortcuts-section { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem; }
-
-.shortcuts-label {
-  font-size: 0.75rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.07em; color: var(--mid);
-}
-
-.shortcuts-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-
-.shortcut-chip {
-  font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
-  padding: 0.3rem 0.75rem; border-radius: 999px;
-  border: 1.5px solid var(--border); background: var(--white); color: var(--mid);
-  cursor: pointer; transition: all 0.18s ease;
-}
-.shortcut-chip:hover { border-color: var(--orange); color: var(--orange); }
-.shortcut-chip.active-dest { background: var(--orange); border-color: var(--orange); color: var(--white); }
-
-.use-route-btn {
-  font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
-  padding: 0.35rem 0.75rem; border-radius: var(--radius-sm);
-  border: 1.5px solid var(--green); background: transparent; color: var(--green);
-  cursor: pointer; margin-top: 0.25rem; transition: all 0.18s ease; align-self: flex-start;
-}
-.use-route-btn:hover { background: var(--green); color: var(--white); }
-
-.student-banner {
-  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
-  color: var(--white); padding: 0.85rem 2rem;
-  display: flex; align-items: center; gap: 1rem;
-  max-width: 860px; margin: 0 auto;
-  border-radius: 0 0 var(--radius) var(--radius);
-}
-.student-banner[hidden] { display: none; }
-.badge-icon { font-size: 1.5rem; }
-.student-banner strong { display: block; font-size: 0.9rem; }
-.student-banner p { font-size: 0.78rem; opacity: 0.85; margin-top: 0.1rem; }
-.discount-chip {
-  margin-left: auto; background: rgba(255,255,255,0.25);
-  border: 1.5px solid rgba(255,255,255,0.5); border-radius: 999px;
-  padding: 0.2rem 0.7rem; font-size: 0.85rem; font-weight: 800; white-space: nowrap;
-}
 
 /* ---- UTILITIES ---- */
 .hidden { display: none !important; }
