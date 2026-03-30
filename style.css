@@ -822,3 +822,61 @@ footer {
 footer a { color: var(--orange-light); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 .footer-note { font-size: 0.72rem; opacity: 0.6; font-style: italic; }
+
+/* ---- SHORTCUTS ---- */
+.shortcuts-section { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem; }
+
+.shortcuts-label {
+  font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--mid);
+}
+
+.shortcuts-grid { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.shortcut-chip {
+  font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
+  padding: 0.3rem 0.75rem; border-radius: 999px;
+  border: 1.5px solid var(--border); background: var(--white); color: var(--mid);
+  cursor: pointer; transition: all 0.18s ease;
+}
+.shortcut-chip:hover { border-color: var(--orange); color: var(--orange); }
+.shortcut-chip.active-dest { background: var(--orange); border-color: var(--orange); color: var(--white); }
+
+.use-route-btn {
+  font-family: var(--font-body); font-size: 0.75rem; font-weight: 600;
+  padding: 0.35rem 0.75rem; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--green); background: transparent; color: var(--green);
+  cursor: pointer; margin-top: 0.25rem; transition: all 0.18s ease; align-self: flex-start;
+}
+.use-route-btn:hover { background: var(--green); color: var(--white); }
+
+.student-banner {
+  background: linear-gradient(135deg, var(--orange) 0%, var(--orange-light) 100%);
+  color: var(--white); padding: 0.85rem 2rem;
+  display: flex; align-items: center; gap: 1rem;
+  max-width: 860px; margin: 0 auto;
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.student-banner[hidden] { display: none; }
+.badge-icon { font-size: 1.5rem; }
+.student-banner strong { display: block; font-size: 0.9rem; }
+.student-banner p { font-size: 0.78rem; opacity: 0.85; margin-top: 0.1rem; }
+.discount-chip {
+  margin-left: auto; background: rgba(255,255,255,0.25);
+  border: 1.5px solid rgba(255,255,255,0.5); border-radius: 999px;
+  padding: 0.2rem 0.7rem; font-size: 0.85rem; font-weight: 800; white-space: nowrap;
+}
+
+/* ---- UTILITIES ---- */
+.hidden { display: none !important; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 600px) {
+  .header-inner { padding: 1.5rem 1rem 1.2rem; flex-direction: column; gap: 0.75rem; }
+  .header-right { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  main { padding: 1.5rem 1rem 3rem; }
+  .result-fare { font-size: 2.2rem; }
+  .filter-bar { flex-direction: column; align-items: flex-start; }
+  .sort-group { margin-left: 0; }
+  .student-banner { padding: 0.75rem 1rem; }
+}
