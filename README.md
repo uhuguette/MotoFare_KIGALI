@@ -1,38 +1,38 @@
-# 🏍️ MotoFare Kigali
+# MotoFare Kigali
 
 > **Know the fair price before you ride.**
 
 A web application that helps riders in Kigali, Rwanda get transparent, fair fare estimates for moto-taxi rides — especially useful for ALU students and other university students navigating common routes.
 
-🌐 **Live:** [motofare.huguette.tech](http://motofare.huguette.tech)
+**Live:** [motofare.huguette.tech](http://motofare.huguette.tech)
 
 ---
 
-## 📖 The Problem
+## The Problem
 
 Moto-taxis in Kigali often charge inconsistent or inflated fares, especially to students unfamiliar with standard prices. There is no transparent, open tool to know what a ride *should* cost before you board and negotiate. MotoFare solves that.
 
 ---
 
-## ✨ Features
+## Features
 
-- **⚡ Fixed ALU Routes** — Community-verified fair prices for 4 common ALU Campus routes (Kimironko, Remera, Airport, Downtown/Mu Mujyi) with a "Use this route" button to load them into the estimator
-- **📍 Custom Fare Estimator** — Type any two locations in Kigali; the app geocodes them and calculates a real road-distance fare
-- **📡 GPS Detection** — Tap the 📍 button to auto-detect your current location via browser GPS + Nominatim reverse geocoding
-- **🎓 Student Discount** — Toggle a 20% student discount in the header (ALU, UR, CMU Africa, AUCA, MKU, Kepler)
-- **🌙 Night Surcharge** — Automatically applies +15% between 21:00 and 05:00
-- **🔍 Filter & Sort** — Filter fixed routes by price range; sort by price or distance
-- **💰 Fare Breakdown** — Shows every component of the fare (base, tiered km rate, surcharge, discount) transparently
-- **🔗 Negotiation Range** — Gives a realistic low–high range so you know what to expect
-- **⌨️ Autocomplete** — Suggests common Kigali locations as you type
-- **⚠️ Error Handling** — Clear, actionable messages for API failures, out-of-bounds locations, or network errors
-- **📱 Responsive** — Works on mobile and desktop
+- **Fixed ALU Routes** — Community-verified fair prices for 4 common ALU Campus routes (Kimironko, Remera, Airport, Downtown/Mu Mujyi) with a "Use this route" button to load them into the estimator
+- **Custom Fare Estimator** — Type any two locations in Kigali; the app geocodes them and calculates a real road-distance fare
+- **GPS Detection** — Tap the location button to auto-detect your current location via browser GPS + Nominatim reverse geocoding
+- **Student Discount** — 20% discount activates automatically when the trip is to or from a university (ALU, UR, CMU Africa, AUCA, MKU, Kepler)
+- **Night Surcharge** — Automatically applies +15% between 21:00 and 05:00
+- **Filter & Sort** — Filter fixed routes by price range; sort by price or distance
+- **Fare Breakdown** — Shows every component of the fare (base, tiered km rate, surcharge, discount) transparently
+- **Negotiation Range** — Gives a realistic low–high range so you know what to expect
+- **Autocomplete** — Suggests common Kigali locations as you type
+- **Error Handling** — Clear, actionable messages for API failures, out-of-bounds locations, or network errors
+- **Responsive** — Works on mobile and desktop
 
 ---
 
-## 🔌 APIs Used
+## APIs Used
 
-> ✅ **Both APIs are completely free and require NO API key.**
+> Both APIs are completely free and require NO API key.
 
 | API | Purpose | Documentation |
 |-----|---------|---------------|
@@ -44,7 +44,7 @@ Moto-taxis in Kigali often charge inconsistent or inflated fares, especially to 
 
 ---
 
-## 🧮 Fare Model
+## Fare Model
 
 Based on prevailing Kigali moto-taxi market rates:
 
@@ -63,11 +63,11 @@ Fixed routes use community-verified prices that reflect real student experience.
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 ### Prerequisites
 - A modern web browser (Chrome, Firefox, Edge, Safari)
-- **No API key required** — both APIs are free and open
+- No API key required — both APIs are free and open
 
 ### Option A: Open directly (simplest)
 
@@ -82,7 +82,7 @@ start index.html        # Windows
 xdg-open index.html     # Linux
 ```
 
-> ⚠️ GPS detection may require a local server (see Option B) due to browser security restrictions on `file://` URLs.
+> Note: GPS detection may require a local server (see Option B) due to browser security restrictions on `file://` URLs.
 
 ### Option B: Local server (recommended for GPS)
 
@@ -98,7 +98,7 @@ Then visit `http://localhost:8080`
 
 ---
 
-## 🌐 Deployment
+## Deployment
 
 The app is a set of **static files** (HTML + CSS + JS) served by Nginx on two web servers, with HAProxy distributing traffic between them.
 
@@ -106,9 +106,9 @@ The app is a set of **static files** (HTML + CSS + JS) served by Nginx on two we
 
 | Server | Role | IP | Status |
 |--------|------|----|--------|
-| Web01 | Nginx web server | 54.211.72.26 | ✅ Running |
-| Web02 | Nginx web server | 3.88.144.28 | ✅ Running |
-| Lb01 | HAProxy load balancer | 13.222.209.189 | ✅ Running |
+| Web01 | Nginx web server | 54.211.72.26 | Running |
+| Web02 | Nginx web server | 3.88.144.28 | Running |
+| Lb01 | HAProxy load balancer | 13.222.209.189 | Running |
 
 **Live URL:** [http://motofare.huguette.tech](http://motofare.huguette.tech)
 
@@ -167,8 +167,8 @@ sudo nginx -t && sudo systemctl restart nginx && sudo systemctl enable nginx
 ```
 
 Both servers verified live:
-- `http://54.211.72.26` → ✅ 200 OK
-- `http://3.88.144.28` → ✅ 200 OK
+- `http://54.211.72.26` — 200 OK
+- `http://3.88.144.28` — 200 OK
 
 ---
 
@@ -220,8 +220,8 @@ sudo systemctl restart haproxy && sudo systemctl enable haproxy
 ```
 
 Load balancer verified:
-- `http://13.222.209.189` → ✅ 200 OK
-- `http://motofare.huguette.tech` → ✅ 200 OK
+- `http://13.222.209.189` — 200 OK
+- `http://motofare.huguette.tech` — 200 OK
 
 ---
 
@@ -240,7 +240,7 @@ ssh ubuntu@13.222.209.189 "sudo tail -f /var/log/haproxy.log"
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 MotoFare_KIGALI/
@@ -253,7 +253,7 @@ MotoFare_KIGALI/
 
 ---
 
-## 🔐 Security Notes
+## Security Notes
 
 - **No API keys in the codebase** — both Nominatim and OSRM are fully public, no key needed
 - Nominatim is used within its [usage policy](https://operations.osmfoundation.org/policies/nominatim/) (1 req/sec, User-Agent set)
@@ -262,7 +262,7 @@ MotoFare_KIGALI/
 
 ---
 
-## ⚠️ Challenges & Solutions
+## Challenges & Solutions
 
 | Challenge | Solution |
 |-----------|----------|
@@ -274,7 +274,7 @@ MotoFare_KIGALI/
 
 ---
 
-## 🙏 Credits
+## Credits
 
 | Resource | Use |
 |----------|-----|
@@ -283,11 +283,11 @@ MotoFare_KIGALI/
 | [Google Fonts – Syne](https://fonts.google.com/specimen/Syne) | Display typography |
 | [Google Fonts – DM Sans](https://fonts.google.com/specimen/DM+Sans) | Body typography |
 
-Inspired by the real pricing frustrations of ALU students in Kigali 🇷🇼
+Inspired by the real pricing frustrations of ALU students in Kigali.
 
 ---
 
-## 👤 Author
+## Author
 
 Built by Huguette Uwase — ALU student, African Leadership University, Kigali, Rwanda.
 GitHub: [github.com/uhuguette](https://github.com/uhuguette)
