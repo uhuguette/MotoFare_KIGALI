@@ -4,7 +4,9 @@
 
 A web application that helps riders in Kigali, Rwanda get transparent, fair fare estimates for moto-taxi rides — especially useful for ALU students and other university students navigating common routes.
 
-**Live:** [motofare.huguette.tech](http://motofare.huguette.tech)
+**Live:** [motofare.huguette.tech](https://motofare.huguette.tech)
+
+**Demo Video:** [Watch on Loom](https://www.loom.com/share/143cfb6381374a448b9cda5e8ccb64f6)
 
 ---
 
