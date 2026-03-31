@@ -4,6 +4,8 @@
 
 A web application that helps riders in Kigali, Rwanda get transparent, fair fare estimates for moto-taxi rides — especially useful for ALU students and other university students navigating common routes.
 
+🌐 **Live:** [motofare.huguette.tech](http://motofare.huguette.tech)
+
 ---
 
 ## 📖 The Problem
@@ -49,9 +51,9 @@ Based on prevailing Kigali moto-taxi market rates:
 | Segment | Rate |
 |---------|------|
 | Base fare (first 1 km) | 500 RWF |
-| 1 – 5 km | 300 RWF/km |
-| 5 – 10 km | 250 RWF/km |
-| > 10 km | 200 RWF/km |
+| 1 – 5 km | 200 RWF/km |
+| 5 – 10 km | 150 RWF/km |
+| > 10 km | 110 RWF/km |
 | Night surcharge (21:00 – 05:00) | +15% |
 | Student discount | −20% |
 
@@ -71,8 +73,8 @@ Fixed routes use community-verified prices that reflect real student experience.
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/motofare-kigali.git
-cd motofare-kigali
+git clone https://github.com/uhuguette/MotoFare_KIGALI.git
+cd MotoFare_KIGALI
 
 # Open in browser
 open index.html         # macOS
@@ -100,17 +102,33 @@ Then visit `http://localhost:8080`
 
 The app is a set of **static files** (HTML + CSS + JS) and can be served by any web server.
 
+### Infrastructure
+
+| Server | Role | IP |
+|--------|------|----|
+| Web01 | Web server | 54.211.72.26 |
+| Web02 | Web server | 3.88.144.28 |
+| Lb01 | Load balancer | 13.222.209.189 |
+
+Live URL: **[http://motofare.huguette.tech](http://motofare.huguette.tech)**
+
+---
+
 ### Server Setup (Web01 & Web02)
 
+Repeat these steps on **both** servers.
+
 ```bash
-# 1. SSH into each server
-ssh ubuntu@<WEB01_IP>
+# 1. SSH into the server
+ssh ubuntu@54.211.72.26   # Web01
+# or
+ssh ubuntu@3.88.144.28    # Web02
 
 # 2. Install Nginx
 sudo apt update && sudo apt install nginx -y
 
 # 3. Clone the repository
-sudo git clone https://github.com/YOUR_USERNAME/motofare-kigali.git /var/www/html/motofare
+sudo git clone https://github.com/uhuguette/MotoFare_KIGALI.git /var/www/html/motofare
 
 # 4. Set permissions
 sudo chown -R www-data:www-data /var/www/html/motofare
@@ -147,12 +165,11 @@ sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl restart nginx
 ```
 
-Verify:
+Verify each server is working:
 ```
-http://<WEB01_IP>
+http://54.211.72.26    → should load MotoFare
+http://3.88.144.28     → should load MotoFare
 ```
-
-Repeat all steps on **Web02**.
 
 ---
 
@@ -160,7 +177,7 @@ Repeat all steps on **Web02**.
 
 ```bash
 # 1. SSH into the load balancer
-ssh ubuntu@<LB01_IP>
+ssh ubuntu@13.222.209.189
 
 # 2. Install HAProxy
 sudo apt update && sudo apt install haproxy -y
@@ -169,7 +186,7 @@ sudo apt update && sudo apt install haproxy -y
 sudo nano /etc/haproxy/haproxy.cfg
 ```
 
-Paste this config (replace `<WEB01_IP>` and `<WEB02_IP>`):
+Paste this config:
 
 ```
 global
@@ -193,8 +210,8 @@ frontend motofare_frontend
 backend motofare_backend
     balance roundrobin
     option httpchk GET /
-    server web01 <WEB01_IP>:80 check
-    server web02 <WEB02_IP>:80 check
+    server web01 54.211.72.26:80 check
+    server web02 3.88.144.28:80 check
 ```
 
 ```bash
@@ -206,10 +223,13 @@ sudo systemctl enable haproxy
 ### Verify Load Balancing
 
 ```bash
-# Access via load balancer
-curl http://<LB01_IP>
+# Access via load balancer IP
+curl http://13.222.209.189
 
-# Check HAProxy logs to confirm traffic is alternating
+# Or via domain
+curl http://motofare.huguette.tech
+
+# Check HAProxy logs to confirm traffic is alternating between web01 and web02
 sudo tail -f /var/log/haproxy.log
 ```
 
@@ -220,8 +240,8 @@ You can also temporarily add a server identifier in each copy's footer ("Served 
 ## 🗂️ Project Structure
 
 ```
-old MotoFare KIGALI/
-├── index.html    — App markup (header, route cards, estimator, results)
+MotoFare_KIGALI/
+├── index.html    — App markup (header, route cards, estimator, results, modal)
 ├── style.css     — All styles (CSS variables, layout, components, responsive)
 ├── app.js        — All logic (APIs, pricing, UI, autocomplete, GPS)
 ├── README.md     — This file
@@ -266,4 +286,5 @@ Inspired by the real pricing frustrations of ALU students in Kigali 🇷🇼
 
 ## 👤 Author
 
-Built by Huguette — ALU student, African Leadership University, Kigali, Rwanda.
+Built by Huguette Uwase — ALU student, African Leadership University, Kigali, Rwanda.
+GitHub: [github.com/uhuguette](https://github.com/uhuguette)
