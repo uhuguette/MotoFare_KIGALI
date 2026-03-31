@@ -100,45 +100,45 @@ Then visit `http://localhost:8080`
 
 ## 🌐 Deployment
 
-The app is a set of **static files** (HTML + CSS + JS) and can be served by any web server.
+The app is a set of **static files** (HTML + CSS + JS) served by Nginx on two web servers, with HAProxy distributing traffic between them.
 
-### Infrastructure
+### Live Infrastructure
 
-| Server | Role | IP |
-|--------|------|----|
-| Web01 | Web server | 54.211.72.26 |
-| Web02 | Web server | 3.88.144.28 |
-| Lb01 | Load balancer | 13.222.209.189 |
+| Server | Role | IP | Status |
+|--------|------|----|--------|
+| Web01 | Nginx web server | 54.211.72.26 | ✅ Running |
+| Web02 | Nginx web server | 3.88.144.28 | ✅ Running |
+| Lb01 | HAProxy load balancer | 13.222.209.189 | ✅ Running |
 
-Live URL: **[http://motofare.huguette.tech](http://motofare.huguette.tech)**
+**Live URL:** [http://motofare.huguette.tech](http://motofare.huguette.tech)
 
 ---
 
-### Server Setup (Web01 & Web02)
+### How It Was Deployed
 
-Repeat these steps on **both** servers.
+#### Step 1 — Web Servers (Web01 & Web02)
+
+These steps were applied to both `54.211.72.26` and `3.88.144.28`:
 
 ```bash
-# 1. SSH into the server
-ssh ubuntu@54.211.72.26   # Web01
-# or
-ssh ubuntu@3.88.144.28    # Web02
+# SSH into each server
+ssh ubuntu@54.211.72.26   # repeat for 3.88.144.28
 
-# 2. Install Nginx
-sudo apt update && sudo apt install nginx -y
+# Install Nginx
+sudo apt update && sudo apt install nginx git -y
 
-# 3. Clone the repository
+# Clone the repo
 sudo git clone https://github.com/uhuguette/MotoFare_KIGALI.git /var/www/html/motofare
 
-# 4. Set permissions
+# Set correct permissions
 sudo chown -R www-data:www-data /var/www/html/motofare
 sudo chmod -R 755 /var/www/html/motofare
 
-# 5. Configure Nginx to serve the app
+# Create Nginx site config
 sudo nano /etc/nginx/sites-available/motofare
 ```
 
-Paste this Nginx config:
+Nginx config used:
 
 ```nginx
 server {
@@ -151,7 +151,7 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    # Cache static assets
+    # Cache static assets for 7 days
     location ~* \.(css|js|woff2|png|jpg|ico)$ {
         expires 7d;
         add_header Cache-Control "public, immutable";
@@ -160,33 +160,32 @@ server {
 ```
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/motofare /etc/nginx/sites-enabled/
+# Enable site and restart Nginx
+sudo ln -sf /etc/nginx/sites-available/motofare /etc/nginx/sites-enabled/motofare
 sudo rm -f /etc/nginx/sites-enabled/default
-sudo nginx -t && sudo systemctl restart nginx
+sudo nginx -t && sudo systemctl restart nginx && sudo systemctl enable nginx
 ```
 
-Verify each server is working:
-```
-http://54.211.72.26    → should load MotoFare
-http://3.88.144.28     → should load MotoFare
-```
+Both servers verified live:
+- `http://54.211.72.26` → ✅ 200 OK
+- `http://3.88.144.28` → ✅ 200 OK
 
 ---
 
-### Load Balancer Configuration (Lb01)
+#### Step 2 — Load Balancer (Lb01)
 
 ```bash
-# 1. SSH into the load balancer
+# SSH into the load balancer
 ssh ubuntu@13.222.209.189
 
-# 2. Install HAProxy
+# Install HAProxy
 sudo apt update && sudo apt install haproxy -y
 
-# 3. Configure HAProxy
+# Edit config
 sudo nano /etc/haproxy/haproxy.cfg
 ```
 
-Paste this config:
+HAProxy config used (`/etc/haproxy/haproxy.cfg`):
 
 ```
 global
@@ -215,25 +214,29 @@ backend motofare_backend
 ```
 
 ```bash
-sudo haproxy -c -f /etc/haproxy/haproxy.cfg   # validate config
-sudo systemctl restart haproxy
-sudo systemctl enable haproxy
+# Validate and restart
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+sudo systemctl restart haproxy && sudo systemctl enable haproxy
 ```
 
-### Verify Load Balancing
+Load balancer verified:
+- `http://13.222.209.189` → ✅ 200 OK
+- `http://motofare.huguette.tech` → ✅ 200 OK
 
+---
+
+#### How Traffic Is Balanced
+
+HAProxy uses **round-robin** balancing — requests alternate between Web01 and Web02 on each connection. The `option httpchk GET /` directive health-checks both backends every few seconds; if one goes down, HAProxy automatically routes all traffic to the healthy server.
+
+To verify balancing is working:
 ```bash
-# Access via load balancer IP
-curl http://13.222.209.189
+# Run multiple requests and watch them alternate
+for i in {1..6}; do curl -s http://motofare.huguette.tech | grep -o "MotoFare"; done
 
-# Or via domain
-curl http://motofare.huguette.tech
-
-# Check HAProxy logs to confirm traffic is alternating between web01 and web02
-sudo tail -f /var/log/haproxy.log
+# Check live HAProxy logs on Lb01
+ssh ubuntu@13.222.209.189 "sudo tail -f /var/log/haproxy.log"
 ```
-
-You can also temporarily add a server identifier in each copy's footer ("Served by Web01" / "Served by Web02"), then refresh multiple times via the LB IP to confirm traffic is balanced.
 
 ---
 
